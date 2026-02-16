@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PaysonTech Lead Generator</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState } = React;
+
+        // Lucide React icons (inline SVG components)
+        const Search = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>;
+        const Download = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>;
+        const Mail = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>;
+        const Phone = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>;
+        const MapPin = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>;
+        const Briefcase = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>;
+        const ExternalLink = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>;
+        const Filter = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>;
+        const Loader2 = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>;
+        const Copy = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>;
+        const Send = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>;
+        const CheckCircle2 = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>;
+        const Tag = () => <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>;
+        const User = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>;
+        const Globe = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>;
+        const Star = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>;
+        const Users = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>;
+
+        function App() {
+            const [activeTab, setActiveTab] = useState('search');
+            const [loading, setLoading] = useState(false);
+            const [businesses, setBusinesses] = useState([]);
+            const [selectedBusinesses, setSelectedBusinesses] = useState(new Set());
+            const [filterOpportunity, setFilterOpportunity] = useState('all');
+            const [searchLocation, setSearchLocation] = useState('');
+            const [copySuccess, setCopySuccess] = useState(false);
+
+            const arizonaLocations = ['Phoenix', 'Tucson', 'Mesa', 'Chandler', 'Scottsdale', 'Glendale', 'Gilbert', 'Tempe', 'Flagstaff'];
+
+            const opportunityCategories = {
+                'High Priority': { color: '#ef4444', bgColor: 'rgba(239, 68, 68, 0.2)' },
+                'Strong Fit': { color: '#f59e0b', bgColor: 'rgba(245, 158, 11, 0.2)' },
+                'Medium Potential': { color: '#3b82f6', bgColor: 'rgba(59, 130, 246, 0.2)' }
+            };
+
+            const searchBusinesses = () => {
+                setLoading(true);
+                setTimeout(() => {
+                    const mockData = [
+                        {
+                            id: '1', name: 'Summit Accounting & Tax Services', address: '1425 E Washington St, Phoenix, AZ 85034',
+                            city: 'Phoenix', phone: '(602) 555-0123', email: 'info@summitaccounting.com',
+                            website: 'summitaccounting.com', type: 'Accounting', rating: 4.7, employees: '5-10',
+                            opportunity: 'High Priority', reviewCount: 87, yearsInBusiness: 12,
+                            contacts: [{ name: 'Michael Chen', role: 'Owner', email: 'mchen@summitaccounting.com' }]
+                        },
+                        {
+                            id: '2', name: 'Desert Rose Real Estate', address: '3890 N Central Ave, Phoenix, AZ 85012',
+                            city: 'Phoenix', phone: '(602) 555-0456', email: 'contact@desertrosere.com',
+                            website: 'desertrosere.com', type: 'Real Estate', rating: 4.5, employees: '10-20',
+                            opportunity: 'Strong Fit', reviewCount: 134, yearsInBusiness: 8,
+                            contacts: [{ name: 'Jennifer Martinez', role: 'Broker/Owner', email: 'jmartinez@desertrosere.com' }]
+                        },
+                        {
+                            id: '3', name: 'Tucson Legal Partners', address: '220 S Stone Ave, Tucson, AZ 85701',
+                            city: 'Tucson', phone: '(520) 555-0789', email: 'admin@tucsonlegal.com',
+                            website: 'tucsonlegalpartners.com', type: 'Law Firm', rating: 4.8, employees: '20-50',
+                            opportunity: 'High Priority', reviewCount: 203, yearsInBusiness: 15,
+                            contacts: [{ name: 'Robert Anderson', role: 'Managing Partner', email: 'randerson@tucsonlegal.com' }]
+                        },
+                        {
+                            id: '4', name: 'Mesa Medical Associates', address: '1955 S Stapley Dr, Mesa, AZ 85204',
+                            city: 'Mesa', phone: '(480) 555-0567', email: 'office@mesamedical.com',
+                            website: 'mesamedicalaz.com', type: 'Medical', rating: 4.9, employees: '10-20',
+                            opportunity: 'High Priority', reviewCount: 318, yearsInBusiness: 10,
+                            contacts: [{ name: 'Dr. Emily Parker', role: 'Practice Owner', email: 'eparker@mesamedical.com' }]
+                        },
+                        {
+                            id: '5', name: 'Scottsdale Insurance Group', address: '7373 N Scottsdale Rd, Scottsdale, AZ 85253',
+                            city: 'Scottsdale', phone: '(480) 555-0234', email: 'hello@scottsdaleinsurance.com',
+                            website: 'scottsdaleinsurancegroup.com', type: 'Insurance', rating: 4.6, employees: '5-10',
+                            opportunity: 'Strong Fit', reviewCount: 92, yearsInBusiness: 6,
+                            contacts: [{ name: 'Amanda Rodriguez', role: 'Principal Agent', email: 'arodriguez@scottsdaleinsurance.com' }]
+                        }
+                    ];
+                    setBusinesses(mockData);
+                    setLoading(false);
+                    setActiveTab('results');
+                }, 1500);
+            };
+
+            const getFilteredBusinesses = () => {
+                return businesses.filter(b => {
+                    const oppMatch = filterOpportunity === 'all' || b.opportunity === filterOpportunity;
+                    const locMatch = !searchLocation || b.city === searchLocation;
+                    return oppMatch && locMatch;
+                });
+            };
+
+            const toggleSelection = (id) => {
+                const newSelected = new Set(selectedBusinesses);
+                if (newSelected.has(id)) newSelected.delete(id);
+                else newSelected.add(id);
+                setSelectedBusinesses(newSelected);
+            };
+
+            const copyEmails = () => {
+                const selected = businesses.filter(b => selectedBusinesses.has(b.id));
+                const emails = selected.map(b => b.email).join(', ');
+                navigator.clipboard.writeText(emails).then(() => {
+                    setCopySuccess(true);
+                    setTimeout(() => setCopySuccess(false), 2000);
+                });
+            };
+
+            const exportToCSV = () => {
+                const selected = businesses.filter(b => selectedBusinesses.has(b.id));
+                const headers = ['Name', 'Email', 'Phone', 'Address', 'City', 'Website', 'Type', 'Opportunity'];
+                const rows = selected.map(b => [b.name, b.email, b.phone, b.address, b.city, b.website, b.type, b.opportunity]);
+                const csv = [headers, ...rows].map(row => row.map(cell => `"${cell}"`).join(',')).join('\\n');
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `paysontech-leads-${new Date().toISOString().split('T')[0]}.csv`;
+                a.click();
+            };
+
+            const sendEmails = () => {
+                const selected = businesses.filter(b => selectedBusinesses.has(b.id));
+                const emails = selected.map(b => b.email).join(',');
+                window.location.href = `mailto:${emails}?subject=IT Support Services&body=Hello,%0A%0AWe specialize in IT support and AI solutions...`;
+            };
+
+            const filtered = getFilteredBusinesses();
+
+            return (
+                <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #0f0f1e 100%)', color: '#e8e8f0', fontFamily: 'Inter, sans-serif' }}>
+                    {/* Header */}
+                    <div style={{ background: 'rgba(20, 20, 35, 0.8)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(99, 102, 241, 0.2)', padding: '24px 32px', position: 'sticky', top: 0, zIndex: 100 }}>
+                        <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', alignItems: 'center', gap: '16px' }}>
+                            <div style={{ width: '48px', height: '48px', background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 20px rgba(99, 102, 241, 0.4)' }}>
+                                <Briefcase />
+                            </div>
+                            <div>
+                                <h1 style={{ margin: 0, fontSize: '28px', fontWeight: '700' }}>PaysonTech Lead Generator</h1>
+                                <p style={{ margin: '4px 0 0 0', fontSize: '14px', color: '#9ca3af' }}>Find businesses across Arizona for IT support & AI services</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Main Content */}
+                    <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '32px' }}>
+                        {/* Tabs */}
+                        <div style={{ display: 'flex', gap: '8px', marginBottom: '32px' }}>
+                            {['search', 'results'].map(tab => (
+                                <button key={tab} onClick={() => setActiveTab(tab)} style={{ padding: '12px 24px', background: activeTab === tab ? 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)' : 'rgba(30, 30, 45, 0.6)', border: 'none', borderRadius: '10px', color: '#fff', fontSize: '15px', fontWeight: '600', cursor: 'pointer', textTransform: 'capitalize', boxShadow: activeTab === tab ? '0 4px 16px rgba(99, 102, 241, 0.4)' : 'none' }}>
+                                    {tab}
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* Search Tab */}
+                        {activeTab === 'search' && (
+                            <div style={{ background: 'rgba(20, 20, 35, 0.6)', backdropFilter: 'blur(10px)', borderRadius: '16px', padding: '40px', border: '1px solid rgba(99, 102, 241, 0.2)' }}>
+                                <h2 style={{ fontSize: '22px', fontWeight: '700', marginBottom: '24px' }}>Search Parameters</h2>
+                                <button onClick={searchBusinesses} disabled={loading} style={{ padding: '16px 40px', background: loading ? 'rgba(99, 102, 241, 0.5)' : 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)', border: 'none', borderRadius: '12px', color: '#fff', fontSize: '16px', fontWeight: '700', cursor: loading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: '10px', boxShadow: '0 6px 24px rgba(99, 102, 241, 0.4)' }}>
+                                    {loading ? <Loader2 /> : <Search />}
+                                    {loading ? 'Searching...' : 'Search Businesses'}
+                                </button>
+                            </div>
+                        )}
+
+                        {/* Results Tab */}
+                        {activeTab === 'results' && (
+                            <div>
+                                {businesses.length > 0 && (
+                                    <div style={{ background: 'rgba(20, 20, 35, 0.6)', borderRadius: '16px', padding: '24px', marginBottom: '24px', border: '1px solid rgba(99, 102, 241, 0.2)' }}>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px', marginBottom: '16px' }}>
+                                            <span style={{ fontSize: '15px', fontWeight: '600' }}>{selectedBusinesses.size} of {filtered.length} selected</span>
+                                            <div style={{ display: 'flex', gap: '12px' }}>
+                                                <button onClick={copyEmails} disabled={selectedBusinesses.size === 0} style={{ padding: '10px 20px', background: copySuccess ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' : 'rgba(99, 102, 241, 0.2)', border: '1px solid rgba(99, 102, 241, 0.4)', borderRadius: '8px', color: '#fff', fontSize: '14px', fontWeight: '600', cursor: selectedBusinesses.size === 0 ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                    {copySuccess ? <CheckCircle2 /> : <Copy />}
+                                                    {copySuccess ? 'Copied!' : 'Copy Emails'}
+                                                </button>
+                                                <button onClick={sendEmails} disabled={selectedBusinesses.size === 0} style={{ padding: '10px 20px', background: 'linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%)', border: 'none', borderRadius: '8px', color: '#fff', fontSize: '14px', fontWeight: '700', cursor: selectedBusinesses.size === 0 ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                    <Send />
+                                                    Send Emails
+                                                </button>
+                                                <button onClick={exportToCSV} disabled={selectedBusinesses.size === 0} style={{ padding: '10px 20px', background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', border: 'none', borderRadius: '8px', color: '#fff', fontSize: '14px', fontWeight: '700', cursor: selectedBusinesses.size === 0 ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                    <Download />
+                                                    Export CSV
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div style={{ borderTop: '1px solid rgba(99, 102, 241, 0.2)', paddingTop: '16px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                                            <select value={searchLocation} onChange={(e) => setSearchLocation(e.target.value)} style={{ padding: '6px 12px', background: 'rgba(30, 30, 45, 0.6)', border: '1px solid rgba(99, 102, 241, 0.4)', borderRadius: '6px', color: '#e8e8f0', fontSize: '13px', cursor: 'pointer' }}>
+                                                <option value="">All Cities</option>
+                                                {arizonaLocations.map(loc => <option key={loc} value={loc}>{loc}</option>)}
+                                            </select>
+                                            {['all', ...Object.keys(opportunityCategories)].map(opp => (
+                                                <button key={opp} onClick={() => setFilterOpportunity(opp)} style={{ padding: '6px 16px', background: filterOpportunity === opp ? (opp === 'all' ? 'rgba(99, 102, 241, 0.3)' : opportunityCategories[opp].bgColor) : 'rgba(30, 30, 45, 0.6)', border: `1px solid rgba(99, 102, 241, 0.4)`, borderRadius: '6px', color: filterOpportunity === opp && opp !== 'all' ? opportunityCategories[opp].color : '#e8e8f0', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                                                    {opp === 'all' ? 'All' : opp}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {filtered.length === 0 ? (
+                                    <div style={{ background: 'rgba(20, 20, 35, 0.4)', borderRadius: '16px', padding: '80px 40px', textAlign: 'center', border: '1px dashed rgba(99, 102, 241, 0.3)' }}>
+                                        <h3 style={{ fontSize: '20px', fontWeight: '700' }}>No Results Yet</h3>
+                                        <p style={{ color: '#9ca3af' }}>Use the search tab to find businesses</p>
+                                    </div>
+                                ) : (
+                                    <div style={{ display: 'grid', gap: '16px' }}>
+                                        {filtered.map(business => (
+                                            <div key={business.id} style={{ background: selectedBusinesses.has(business.id) ? 'rgba(99, 102, 241, 0.15)' : 'rgba(20, 20, 35, 0.6)', borderRadius: '12px', padding: '24px', border: selectedBusinesses.has(business.id) ? '2px solid rgba(99, 102, 241, 0.6)' : '1px solid rgba(99, 102, 241, 0.2)' }}>
+                                                <div style={{ display: 'flex', gap: '16px', alignItems: 'start' }}>
+                                                    <input type="checkbox" checked={selectedBusinesses.has(business.id)} onChange={() => toggleSelection(business.id)} style={{ width: '20px', height: '20px', marginTop: '4px', cursor: 'pointer', accentColor: '#6366f1' }} />
+                                                    <div style={{ flex: 1 }}>
+                                                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px', flexWrap: 'wrap', gap: '12px' }}>
+                                                            <h3 style={{ fontSize: '20px', fontWeight: '700', margin: 0 }}>{business.name}</h3>
+                                                            <div style={{ background: opportunityCategories[business.opportunity].bgColor, border: `2px solid ${opportunityCategories[business.opportunity].color}`, padding: '6px 12px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', color: opportunityCategories[business.opportunity].color }}>
+                                                                {business.opportunity}
+                                                            </div>
+                                                        </div>
+                                                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '12px', padding: '16px', background: 'rgba(15, 15, 30, 0.4)', borderRadius: '8px', marginBottom: '12px' }}>
+                                                            <div><div style={{ fontSize: '12px', color: '#9ca3af' }}>Email</div><a href={`mailto:${business.email}`} style={{ fontSize: '14px', fontWeight: '600', color: '#6366f1', textDecoration: 'none' }}>{business.email}</a></div>
+                                                            <div><div style={{ fontSize: '12px', color: '#9ca3af' }}>Phone</div><a href={`tel:${business.phone}`} style={{ fontSize: '14px', fontWeight: '600', color: '#6366f1', textDecoration: 'none' }}>{business.phone}</a></div>
+                                                            <div><div style={{ fontSize: '12px', color: '#9ca3af' }}>Address</div><div style={{ fontSize: '14px', fontWeight: '600' }}>{business.address}</div></div>
+                                                            <div><div style={{ fontSize: '12px', color: '#9ca3af' }}>Website</div><a href={`https://${business.website}`} target="_blank" rel="noopener" style={{ fontSize: '14px', fontWeight: '600', color: '#6366f1', textDecoration: 'none' }}>{business.website}</a></div>
+                                                        </div>
+                                                        {business.contacts && business.contacts.length > 0 && (
+                                                            <div style={{ background: 'rgba(99, 102, 241, 0.1)', border: '1px solid rgba(99, 102, 241, 0.2)', borderRadius: '8px', padding: '12px' }}>
+                                                                <div style={{ fontSize: '13px', fontWeight: '600', color: '#9ca3af', marginBottom: '4px' }}>Key Contact</div>
+                                                                <div style={{ fontSize: '15px', fontWeight: '700' }}>{business.contacts[0].name}</div>
+                                                                <div style={{ fontSize: '13px', color: '#a5b4fc' }}>{business.contacts[0].role}</div>
+                                                                <a href={`mailto:${business.contacts[0].email}`} style={{ fontSize: '13px', color: '#6366f1', textDecoration: 'none' }}>{business.contacts[0].email}</a>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
